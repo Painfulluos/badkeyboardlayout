@@ -1,7 +1,6 @@
 import keyboard
 import pyperclip
 import time
-import pprint
 
 
 def get_layout(first_layout: str, second_layout: str) -> dict:
@@ -17,10 +16,13 @@ def get_layout(first_layout: str, second_layout: str) -> dict:
 	return {'lower_layout': lower_layout, 'upper_layout': upper_layout}
 
 def get_buff_text():
-	return pyperclip.paste()
+	text = pyperclip.paste()
+	print('program get buff text')
+	time.sleep(.01)
+	print(f'text save in buff: {text}')
+	return text
 
-
-class Keyboard:
+class Changer:
 	RUS_LAYOUT = 'йцукенгшщзхъфывапролджэячсмитьбю.'
 	ENG_LAYOUT = "qwertyuiop[]asdfghjkl;'zxcvbnm,./"
 
@@ -33,18 +35,33 @@ class Keyboard:
 		
 		for i in buff_text:
 			try:
-				translate_text += Keyboard.engru_lower[i]
+				translate_text += Changer.engru_lower[i]
 			except:
 				try:
-					translate_text += Keyboard.engru_upper[i]
+					translate_text += Changer.engru_upper[i]
 				except:
+					print('except')
 					translate_text += i
+		print(translate_text)
 		return translate_text
 
 	def reverse_to_buff(self):
 		pyperclip.copy(self.reverse())
-
+		print('copy reversed text in buff')
 
 if __name__ == '__main__':
-	kb = Keyboard()
-	kb.reverse_to_buff()
+	kb = Changer()
+	print('program start')
+	while True:
+		time.sleep(.01)
+		try:
+			if keyboard.is_pressed('ctrl') and keyboard.is_pressed('shift') and keyboard.is_pressed('b'):
+				kb.reverse_to_buff()
+				time.sleep(.15)
+
+			if keyboard.is_pressed('ctrl') and keyboard.is_pressed('esc'):
+				print('program stop')
+				exit()
+		except ImportError:
+			print("You must be root to use this library on linux.")
+			break

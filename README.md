@@ -1,6 +1,6 @@
 # badkeyboardlayout
 
-For the script to work, you need to download the modules: "keyboard", "paperclip".
+For the script to work, you need to download the modules: "keyboard", "pyperclip".
 
 To translate, you need to copy the text and press the key combination "ctrl+shift+b". 
 
